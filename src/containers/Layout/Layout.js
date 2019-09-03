@@ -2,8 +2,8 @@ import React, { Component } from 'react'
 
 import { Main } from './styled__components'
 
-import Toolbar from '../Navigation/Toolbar/Toolbar'
-import SideDrawer from '../Navigation/SideDrawer/SideDrawer'
+import Toolbar from '../../components/Navigation/Toolbar/Toolbar'
+import SideDrawer from '../../components/Navigation/SideDrawer/SideDrawer'
 
 class Layout extends Component {
 
@@ -15,15 +15,21 @@ class Layout extends Component {
         this.setState({showSideDrawer: false})
     }
 
-    sideDrawerOpenHandler = () => {
-        this.setState({showSideDrawer: true})
+    toToggleSideDrawer = () => {
+        this.setState((prevState, props) => ({
+            showSideDrawer: !prevState.showSideDrawer
+        }))
     }
 
     render() {
         return(
             <>
-                <Toolbar toShowSideDrawer={this.sideDrawerOpenHandler} />
-                <SideDrawer open={this.state.showSideDrawer} closed={this.sideDrawerClosedHandler}/>
+                <Toolbar toToggleSideDrawer={this.toToggleSideDrawer} />
+                <SideDrawer
+                    open={this.state.showSideDrawer}
+                    closed={this.sideDrawerClosedHandler}
+                    toToggleSideDrawer={this.toToggleSideDrawer}
+                />
                 <Main>
                     {this.props.children}
                 </Main>

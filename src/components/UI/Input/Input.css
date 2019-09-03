@@ -1,0 +1,7 @@
+.show__invalid {
+    display: block !important
+}
+
+.hide__invalid {
+    display: none
+}
