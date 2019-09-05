@@ -1,4 +1,5 @@
 import * as actionTypes from '../actions/actionTypes'
+import {updateObject} from "../utility";
 
 const initialState = {
     orders: [],
@@ -52,6 +53,10 @@ const reducer = (state = initialState, action) => {
                 ...state,
                 loading: false
             }
+        case actionTypes.AUTH_LOGOUT:
+            return updateObject(state, {
+                orders: []
+            })
         default:
             return state
     }

@@ -120,11 +120,11 @@ class ContactData extends Component {
         const order = {
             ingredients: this.props.ingredients,
             price: this.props.price, //in real app we have calculate price on server side
-            orderData: formData
-
+            orderData: formData,
+            userId: this.props.userId
         }
 
-        this.props.onOrderBurger(order)
+        this.props.onOrderBurger(order, this.props.token)
     }
 
     inputChangedHandler = (event, inputID) => {
@@ -157,8 +157,6 @@ class ContactData extends Component {
 
         const formElements = []
 
-        console.log(this.state.orderForm)
-
         for (let key in this.state.orderForm) {
             formElements.push({
                 id: key,
@@ -168,7 +166,6 @@ class ContactData extends Component {
         }
 
         const formToShow = formElements.map((el) => {
-            console.log('form render')
             return <InputCustom
                         key={el.id}
                         elementType={el.config.elementType}
@@ -202,13 +199,15 @@ const mapStateToProps = state => {
     return {
         ingredients: state.burgerBuilder.ingredients,
         price: state.burgerBuilder.totalPrice,
-        loading: state.order.loading
+        loading: state.order.loading,
+        token: state.auth.token,
+        userId: state.auth.userId
     }
 }
 
 const mapDispatchToProps = dispatch => {
     return {
-        onOrderBurger: (orderData) => dispatch(orderActions.purchaseBurger(orderData))
+        onOrderBurger: (orderData, token) => dispatch(orderActions.purchaseBurger(orderData, token))
     }
 }
 

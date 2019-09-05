@@ -4,7 +4,8 @@ import  { updateObject } from "../utility";
 const initialState = {
     ingredients: null,
     totalPrice: 1,
-    error: false
+    error: false,
+    buildingBurger: false
 }
 
 const INGREDIENT_PRICES = {
@@ -17,26 +18,27 @@ const INGREDIENT_PRICES = {
 const burger = (state = initialState, action) => {
     switch (action.type) {
         case actionTypes.ADD_INGREDIENT:
-            return {
-                ...state,
-                ingredients: {
-                    ...state.ingredients,
-                    [action.ingredientName]: state.ingredients[action.ingredientName] + 1
-                },
-                totalPrice: state.totalPrice + INGREDIENT_PRICES[action.ingredientName]
+            const updatedIngredient = { [action.ingredientName]: state.ingredients[action.ingredientName] + 1}
+            const updatedIngredients = updateObject(state.ingredients, updatedIngredient)
+            const updatedState = {
+                ingredients: updatedIngredients,
+                totalPrice: state.totalPrice + INGREDIENT_PRICES[action.ingredientName],
+                buildingBurger: true
             }
+            return updateObject(state, updatedState)
+
         case actionTypes.REMOVE_INGREDIENT:
-            return {
-                ...state,
-                ingredients: {
-                    ...state.ingredients,
-                    [action.ingredientName]: state.ingredients[action.ingredientName] - 1
-                },
-                totalPrice: state.totalPrice - INGREDIENT_PRICES[action.ingredientName]
+            const removeIngredient = { [action.ingredientName]: state.ingredients[action.ingredientName] - 1 }
+            const updatedRemoveIngredients = updateObject(state.ingredients, removeIngredient)
+            const updatedRemoveState = {
+                ingredients: updatedRemoveIngredients,
+                totalPrice: state.totalPrice + INGREDIENT_PRICES[action.ingredientName],
+                buildingBurger: true
             }
+            return updateObject(state, updatedRemoveState)
+
         case actionTypes.SET_INGREDIENTS:
-            return {
-                ...state,
+            return updateObject(state, {
                 totalPrice: 1,
                 ingredients: {
                     salad: action.ingredients.salad,
@@ -44,13 +46,14 @@ const burger = (state = initialState, action) => {
                     cheese: action.ingredients.cheese,
                     meat: action.ingredients.meat
                 },
-                error: false
-            }
+                error: false,
+                buildingBurger: true
+            })
+
         case actionTypes.FETCH_INGREDIENTS__FAILED:
-            return {
-                ...state,
+            return updateObject(state, {
                 error: true
-            }
+            })
         default:
             return state
 

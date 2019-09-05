@@ -7,7 +7,9 @@ import NavigationItems from '../NavigationItems/NavigationItems'
 const toolbar = ( props ) => (
     <Header>
         <Logo toToggleSideDrawer={props.toToggleSideDrawer}/>
-        <NavigationItems />
+        <NavigationItems
+            isAuth={props.isAuth}
+        />
     </Header>
 )
 
