@@ -10,10 +10,8 @@ import Modal from '../../components/UI/Modal/Modal'
 import OrderSum from '../../components/Burger/OrderSum/OrderSum'
 import Spinner from '../../components/UI/Spinner/Spinner'
 import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler'
-//import mapStateToProps from "react-redux/es/connect/mapStateToProps";
-//import mapDispatchToProps from "react-redux/es/connect/mapDispatchToProps";
 
-class BurgerBuilder extends Component {
+export class BurgerBuilder extends Component {
 
     state = {
         isPurchase: false
@@ -21,9 +19,6 @@ class BurgerBuilder extends Component {
 
     componentDidMount() {
         this.props.onInitIngredients()
-
-
-
     }
 
     updatePurchaseState(ingredients) {
@@ -56,9 +51,7 @@ class BurgerBuilder extends Component {
     }
 
     purchaseContinueHandler = () => {
-
         this.props.onInitPurchase()
-
         this.props.history.push('/checkout')
     }
 
@@ -96,7 +89,6 @@ class BurgerBuilder extends Component {
                 onContinue={this.purchaseContinueHandler}
                 totalPrice={this.props.price}
             />
-
         }
 
         return (
