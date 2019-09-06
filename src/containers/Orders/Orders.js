@@ -19,7 +19,6 @@ class Orders extends Component {
     }
 
     componentDidMount() {
-        console.log(this.props.token)
         this.props.toGetOrders(this.props.token, this.props.userId)
     }
 

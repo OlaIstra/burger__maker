@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 
 import { connect } from 'react-redux'
 import { Redirect } from 'react-router-dom'
+import { checkValidaty } from '../../shared/utility'
 
 
 import InputCustom from '../../components/UI/Input/Input'
@@ -51,28 +52,7 @@ class Auth extends Component {
         }
     }
 
-    checkValidaty(value, rules) {
-        let isValid = true
 
-        if (!rules) {
-            return
-        }
-
-        if (rules.required) {
-            isValid = value.trim() !== '' && isValid
-        }
-
-        if (rules.minLength) {
-            isValid = value.length >= rules.minLength && isValid
-        }
-
-        if (rules.isEmail) {
-            const pattern = /^[.a-z0-9_-]+@[а-яА-Яa-z0-9-]+\.[а-яА-Яa-zA-Z]{2,6}$/i;
-            isValid = pattern.test(value) && isValid
-        }
-
-        return isValid
-    }
 
     inputChangedHandler = (event, controlName) => {
         const updateForm = {
@@ -80,7 +60,7 @@ class Auth extends Component {
             [controlName]: {
                 ...this.state.controls[controlName],
                 value: event.target.value,
-                valid: this.checkValidaty(event.target.value, this.state.controls[controlName].validation),
+                valid: checkValidaty(event.target.value, this.state.controls[controlName].validation),
                 touched: true
             }
         }
@@ -135,7 +115,6 @@ class Auth extends Component {
         }
 
         let errorMessage = null
-
         if (this.props.error) {
             errorMessage = (
                 <p>{this.props.error.message}</p>
@@ -143,7 +122,6 @@ class Auth extends Component {
         }
 
         let authRedirect = null
-
         if (this.props.isAuth) {
             authRedirect = <Redirect to={this.props.authRedirectPath}/>
         }

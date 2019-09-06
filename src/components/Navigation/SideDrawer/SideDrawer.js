@@ -15,7 +15,10 @@ const sidedrawer= ( props ) => {
     return(
         <>
             <Backdrop show={props.open} clicked={props.closed}/>
-            <SideDrawer className={showClass}>
+            <SideDrawer
+                className={showClass}
+                onClick={props.closed}
+            >
                 <LogoWrapper>
                     <Logo  toToggleSideDrawer={props.toToggleSideDrawer}/>
                 </LogoWrapper>

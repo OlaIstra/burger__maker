@@ -1,5 +1,5 @@
 import * as actionTypes from '../actions/actionTypes'
-import  { updateObject } from "../utility";
+import  { updateObject } from "../../shared/utility";
 
 const initialState = {
     ingredients: null,
@@ -47,7 +47,7 @@ const burger = (state = initialState, action) => {
                     meat: action.ingredients.meat
                 },
                 error: false,
-                buildingBurger: true
+                buildingBurger: false
             })
 
         case actionTypes.FETCH_INGREDIENTS__FAILED:

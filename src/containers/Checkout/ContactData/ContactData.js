@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 
 import * as orderActions from '../../../store/actions/index'
 import axios from '../../../axios'
+import { checkValidaty } from "../../../shared/utility";
 
 import withErrorHandler from '../../../hoc/withErrorHandler/withErrorHandler'
 import Spinner from '../../../components/UI/Spinner/Spinner'
@@ -90,24 +91,6 @@ class ContactData extends Component {
         formIsValid: false
     }
 
-    checkValidaty(value, rules) {
-        let isValid = true
-
-        if (!rules) {
-            return
-        }
-
-        if (rules.required) {
-            isValid = value.trim() !== '' && isValid
-        }
-
-        if (rules.minLength) {
-            isValid = value.length >= rules.minLength && isValid
-        }
-
-        return isValid
-    }
-
     submitHandler = (event) => {
         event.preventDefault()
 
@@ -137,7 +120,7 @@ class ContactData extends Component {
         }
 
         updatedElement.value = event.target.value
-        updatedElement.valid = this.checkValidaty(updatedElement.value, updatedElement.validation)
+        updatedElement.valid = checkValidaty(updatedElement.value, updatedElement.validation)
         updatedElement.touched = true
         updateForm[inputID] = updatedElement
 
